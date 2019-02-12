@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
 import MessageFeed from './MessageList.jsx';
-
+import { generateRandomId } from './helpers'
 
 class Navbar extends Component {
   render() {
@@ -13,36 +13,22 @@ class Navbar extends Component {
   }
 }
 
-const generateRandomId = (alphabet => {
-  const alphabetLength = alphabet.length;
-  const randoIter = (key, n) => {
-    if (n === 0) {
-      return key;
-    }
-    const randoIndex = Math.floor(Math.random() * alphabetLength);
-    const randoLetter = alphabet[randoIndex];
-    return randoIter(key + randoLetter, n - 1);
-  };
-  return () => randoIter("", 5);
-})("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       loading: true,
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
         {
           id: 234544,
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
+          username: 'Bob',
+          content: 'Has anyone seen my marbles?',
         },
         {
           id: 456788,
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+          username: 'Anonymous',
+          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
         }
       ]
     };
@@ -50,12 +36,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount <App />");
+    console.log('componentDidMount <App />');
     this.setState({ loading: false })
     setTimeout(() => {
-      console.log("Simulating incoming message");
+      console.log('Simulating incoming message');
       // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
+      const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
       const messages = [...this.state.messages, newMessage];
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
