@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import Message from './Message.jsx';
 
 export default class MessageFeed extends Component {
     render() {
+        const messages = this.props.messages.map((message, index) => {
+            return (<Message key={message.id} message={message} />);
+        })
       return (
-        <div className="message system">
-          Anonymous1 changed their name to nomnom.
-        </div>
+        <ul>{messages}</ul>
       )
     }
   }
