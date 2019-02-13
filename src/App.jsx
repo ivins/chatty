@@ -27,27 +27,23 @@ class App extends Component {
   componentDidMount() {
     console.log('componentDidMount <App />');
     this.setState({ loading: false })
-    // setTimeout(() => {
-    //   console.log('Simulating incoming message');
-    //   // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
-    //   const messages = [...this.state.messages, newMessage];
-    //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
-    //   this.setState({messages: messages})
-    // }, 3000);
 
     let socket = new WebSocket('ws://localhost:3001');
     this.socket = socket;
     socket.onopen = () => {
       console.log('Connected to server');
     }
+    //Receive any new messages from the server and add message to clients state.
+    this.socket.onmessage = (event) => {
+      const newServerMessage = JSON.parse(event.data);
+      const messages = [...this.state.messages, newServerMessage];
+      this.setState({messages: messages, currentUser: { name: newServerMessage.username }});
+    }
   }
 
   addNewMessage(user, message) {
-    const newMessage = { id: generateRandomId(), username: user, content: message };
-    const messages = [...this.state.messages, newMessage];
-    this.setState({messages: messages, currentUser: { name: newMessage.username }});
+    //grab message and send to server
+    const newMessage = { username: user, content: message };
     const toServer = JSON.stringify(newMessage);
     this.socket.send(toServer);
   }
