@@ -19,18 +19,7 @@ class App extends Component {
     this.state = { 
       loading: true,
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 234544,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?',
-        },
-        {
-          id: 456788,
-          username: 'Anonymous',
-          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-        }
-      ]
+      messages: []
     };
     this.addNewMessage = this.addNewMessage.bind(this);
   }
@@ -38,21 +27,29 @@ class App extends Component {
   componentDidMount() {
     console.log('componentDidMount <App />');
     this.setState({ loading: false })
-    setTimeout(() => {
-      console.log('Simulating incoming message');
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
-      const messages = [...this.state.messages, newMessage];
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+    // setTimeout(() => {
+    //   console.log('Simulating incoming message');
+    //   // Add a new message to the list of messages in the data store
+    //   const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
+    //   const messages = [...this.state.messages, newMessage];
+    //   // Update the state of the app component.
+    //   // Calling setState will trigger a call to render() in App and all child components.
+    //   this.setState({messages: messages})
+    // }, 3000);
+
+    let socket = new WebSocket('ws://localhost:3001');
+    this.socket = socket;
+    socket.onopen = () => {
+      console.log('Connected to server');
+    }
   }
 
   addNewMessage(user, message) {
     const newMessage = { id: generateRandomId(), username: user, content: message };
     const messages = [...this.state.messages, newMessage];
-    this.setState({messages: messages});
+    this.setState({messages: messages, currentUser: { name: newMessage.username }});
+    const toServer = JSON.stringify(newMessage);
+    this.socket.send(toServer);
   }
 
   render() {

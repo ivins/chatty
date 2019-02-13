@@ -1,14 +1,5 @@
 import React, {Component} from 'react';
 
-// function NewMessageForm({ addNewMessage }) {
-//     const onSubmit = evt => {
-//         evt.preventDefault();
-//         const newMessage = evt.target.elements.message;
-//         console.log('newMessage, ', newMessage);
-
-//     }
-// }
-
 class Chatbar extends Component {
   render() {
     const onSubmit = evt => {
