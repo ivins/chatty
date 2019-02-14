@@ -22,6 +22,7 @@ class App extends Component {
       messages: []
     };
     this.addNewMessage = this.addNewMessage.bind(this);
+    this.addNewNotification = this.addNewNotification.bind(this);
   }
 
   componentDidMount() {
@@ -38,13 +39,20 @@ class App extends Component {
       const newServerMessage = JSON.parse(event.data);
       const messages = [...this.state.messages, newServerMessage];
       this.setState({messages: messages, currentUser: { name: newServerMessage.username }});
+      console.log(this.state.messages);
     }
   }
 
   addNewMessage(user, message) {
     //grab message and send to server
-    const newMessage = { username: user, content: message };
+    const newMessage = { username: user, content: message, type: 'message' };
     const toServer = JSON.stringify(newMessage);
+    this.socket.send(toServer);
+  }
+
+  addNewNotification(user, message) {
+    const newNotification = { username: user, content: message, type: 'notification' };
+    const toServer = JSON.stringify(newNotification);
     this.socket.send(toServer);
   }
 
@@ -58,7 +66,7 @@ class App extends Component {
         <main className="messages">
           <MessageFeed messages={this.state.messages} />
         </main>
-        <Chatbar user={this.state.currentUser} newMessage={this.addNewMessage}/>
+        <Chatbar user={this.state.currentUser} newMessage={this.addNewMessage} newNotification={this.addNewNotification}/>
         </div>
       );
     }

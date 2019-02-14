@@ -9,6 +9,11 @@ class Chatbar extends Component {
         const newMessageUser = evt.currentTarget.elements.user.value;
         this.props.newMessage(newMessageUser, newMessage);
         evt.target.value = '';
+      } else if (evt.keyCode === 13 && evt.target.name === 'user') {
+        const newMessageUser = evt.currentTarget.elements.user.value;
+        const newMessage = `${this.props.user.name} changed their name to ${newMessageUser}`;
+        this.props.newNotification(newMessageUser, newMessage);
+        evt.target.value = '';
       }
     }
 
