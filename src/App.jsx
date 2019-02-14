@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
 import MessageFeed from './MessageList.jsx';
-import { generateRandomId } from './helpers'
 
 class Navbar extends Component {
   render() {
     return (
       <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
+        <span className="navbar-usercount">{this.props.users} users online</span>
       </nav>
     )
   }
@@ -19,7 +19,8 @@ class App extends Component {
     this.state = { 
       loading: true,
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      connections: 1
     };
     this.addNewMessage = this.addNewMessage.bind(this);
     this.addNewNotification = this.addNewNotification.bind(this);
@@ -37,8 +38,13 @@ class App extends Component {
     //Receive any new messages from the server and add message to clients state.
     this.socket.onmessage = (event) => {
       const newServerMessage = JSON.parse(event.data);
-      const messages = [...this.state.messages, newServerMessage];
-      this.setState({messages: messages, currentUser: { name: newServerMessage.username }});
+      console.log('newMessage from server', newServerMessage);
+      if (newServerMessage.size) {
+        this.setState({connections: newServerMessage.size})
+      } else {
+        const messages = [...this.state.messages, newServerMessage];
+        this.setState({messages: messages, currentUser: { name: newServerMessage.username }});
+      }
     }
   }
 
@@ -61,7 +67,7 @@ class App extends Component {
     } else {
       return (
         <div>
-        <Navbar />
+        <Navbar users={this.state.connections}/>
         <main className="messages">
           <MessageFeed messages={this.state.messages} />
         </main>
