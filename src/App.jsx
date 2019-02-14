@@ -39,7 +39,6 @@ class App extends Component {
       const newServerMessage = JSON.parse(event.data);
       const messages = [...this.state.messages, newServerMessage];
       this.setState({messages: messages, currentUser: { name: newServerMessage.username }});
-      console.log(this.state.messages);
     }
   }
 

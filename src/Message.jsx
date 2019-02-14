@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 
 export default class Message extends Component {
     render() {
+      if (this.props.message.type === 'notification') {
+        return (
+          <div className="notification">
+            <span className="notification-content">{this.props.message.content}
+            </span>
+          </div>
+        )  
+      }
       return (
         <div className="message">
           <span className="message-username">{this.props.message.username}</span>
