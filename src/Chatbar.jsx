@@ -11,6 +11,7 @@ class Chatbar extends Component {
           const newMessageUser = evt.currentTarget.elements.user.value;
           const newMessage = `${this.props.user.name} changed their name to ${newMessageUser}`;
           this.props.newNotification(newMessageUser, newMessage);
+          this.props.updateUser(newMessageUser);
           evt.target.value = newMessageUser;
         }
         this.props.newMessage(newMessageUser, newMessage);
@@ -19,6 +20,7 @@ class Chatbar extends Component {
         const newMessageUser = evt.currentTarget.elements.user.value;
         const newMessage = `${this.props.user.name} changed their name to ${newMessageUser}`;
         this.props.newNotification(newMessageUser, newMessage);
+        this.props.updateUser(newMessageUser);
         evt.target.value = newMessageUser;
       }
     }
