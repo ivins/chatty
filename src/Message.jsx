@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+//Message component- distinguishes between notification and message
 export default class Message extends Component {
     render() {
       if (this.props.message.type === 'notification') {

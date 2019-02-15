@@ -12,7 +12,7 @@ No persistent database is involved; the focus is on the client-side experience. 
 ## How to Use
 
 - Required- Node.js must be installed.
-- Fork or clone then inside the 'chatty' folder and the 'chatty_server' folder `npm install`.
+- Fork or clone then inside the main 'chatty' folder and the 'chatty_server' folder `npm install`.
 - Then in the 'chatty_server' folder `node server.js`
-- To start the client inside the 'chatty' folder `npm start`.
+- To start the client inside the main 'chatty' folder `npm start`.
 - Open your browser and go to localhost:3000/ and you will see your Chatty App running.

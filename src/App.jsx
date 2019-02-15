@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Chatbar from './Chatbar.jsx';
 import MessageFeed from './MessageList.jsx';
 
+// Main navbar -- displays connected users count.
 class Navbar extends Component {
   render() {
     return (
@@ -13,6 +14,7 @@ class Navbar extends Component {
   }
 }
 
+// Main application
 class App extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ class App extends Component {
       currentUser: {
         name: 'Anonymous',
         color: this.randomColor()
-      }, // optional.
+      }, 
       messages: [],
       connections: 1
     };
@@ -34,13 +36,13 @@ class App extends Component {
   componentDidMount() {
     console.log('componentDidMount <App />');
     this.setState({ loading: false })
-
+    // Once App is rendered the connection is made to server.
     let socket = new WebSocket('ws://localhost:3001');
     this.socket = socket;
     socket.onopen = () => {
       console.log('Connected to server');
     } 
-    //Receive any new messages from the server and add message to clients state.
+    //Receive any new messages from the server and add message to clients state. Size below refers to # of clients.
     this.socket.onmessage = (event) => {
       const newServerMessage = JSON.parse(event.data);
       if (newServerMessage.size) {
@@ -50,24 +52,27 @@ class App extends Component {
         this.setState({messages: messages});
       }
     }
-  } 
+  }
 
+  // Updates username
   updateUser(user) {
     this.setState({currentUser: { name: user, color: this.state.currentUser.color }});
   }
 
+  //Selects random color for user. Called in state.
   randomColor() {
     const colors = ['#791E94','#407899','#41D3BD','#8EA604'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
+  //Sends new message submission to server along with users color.
   addNewMessage(user, message) {
-    //grab message and send to server
     const newMessage = { username: user, color: this.state.currentUser.color, content: message, type: 'message' };
     const toServer = JSON.stringify(newMessage);
     this.socket.send(toServer);
   }
 
+  //Sends new notification submission to server along with users color.
   addNewNotification(user, message) {
     const newNotification = { username: user, color: this.state.currentUser.color, content: message, type: 'notification' };
     const toServer = JSON.stringify(newNotification);
