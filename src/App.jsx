@@ -61,7 +61,7 @@ class App extends Component {
 
   //Selects random color for user. Called in state.
   randomColor() {
-    const colors = ['#791E94','#407899','#41D3BD','#8EA604'];
+    const colors = ['#791E94','#407899','#41D3BD','#8EA604','#fe4a49','#851e3e'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 

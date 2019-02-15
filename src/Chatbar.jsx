@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 
 class Chatbar extends Component {
   render() {
+    //handles notification for user updates
     const notification = (newUser) => {
       const newMessage = `${this.props.user.name} changed their name to ${newUser}`;
       this.props.newNotification(newUser, newMessage);
       this.props.updateUser(newUser);
     }
-    
+    //event handler for username update and message submission
     const onSubmit = evt => {
       evt.preventDefault();
       const newMessageUser = evt.currentTarget.elements.user.value;
