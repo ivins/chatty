@@ -2,26 +2,25 @@ import React, {Component} from 'react';
 
 class Chatbar extends Component {
   render() {
+    const notification = (newUser) => {
+      const newMessage = `${this.props.user.name} changed their name to ${newUser}`;
+      this.props.newNotification(newUser, newMessage);
+      this.props.updateUser(newUser);
+      evt.target.value = newUser;
+    }
+    
     const onSubmit = evt => {
       evt.preventDefault();
+      const newMessageUser = evt.currentTarget.elements.user.value;
       if (evt.keyCode === 13 && evt.target.name === 'message') {
         const newMessage = evt.target.value;
-        const newMessageUser = evt.currentTarget.elements.user.value;
         if (newMessageUser !== this.props.user.name) {
-          const newMessageUser = evt.currentTarget.elements.user.value;
-          const newMessage = `${this.props.user.name} changed their name to ${newMessageUser}`;
-          this.props.newNotification(newMessageUser, newMessage);
-          this.props.updateUser(newMessageUser);
-          evt.target.value = newMessageUser;
+          notification(newMessageUser);
         }
         this.props.newMessage(newMessageUser, newMessage);
         evt.target.value = '';
       } else if (evt.keyCode === 13 && evt.target.name === 'user') {
-        const newMessageUser = evt.currentTarget.elements.user.value;
-        const newMessage = `${this.props.user.name} changed their name to ${newMessageUser}`;
-        this.props.newNotification(newMessageUser, newMessage);
-        this.props.updateUser(newMessageUser);
-        evt.target.value = newMessageUser;
+        notification(newMessageUser);
       }
     }
 
