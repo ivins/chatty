@@ -1,6 +1,8 @@
 # This Is Chatty App
 A client-side SPA (single-page app) built with ReactJS
 
+!["Screenshot of the main page"](https://github.com/silentscribe/chatty/blob/master/screenshots/Chat-window.png?raw=true)
+
 Contains a chat log displaying messages and notifications. Usernames are displayed in different colors. Colours can be changed/added in the APP component.
 
 Contains an input field to change your name and an input field to send a message.
