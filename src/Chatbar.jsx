@@ -6,7 +6,6 @@ class Chatbar extends Component {
       const newMessage = `${this.props.user.name} changed their name to ${newUser}`;
       this.props.newNotification(newUser, newMessage);
       this.props.updateUser(newUser);
-      evt.target.value = newUser;
     }
     
     const onSubmit = evt => {
@@ -16,11 +15,13 @@ class Chatbar extends Component {
         const newMessage = evt.target.value;
         if (newMessageUser !== this.props.user.name) {
           notification(newMessageUser);
+          evt.target.value = newMessageUser;
         }
         this.props.newMessage(newMessageUser, newMessage);
         evt.target.value = '';
       } else if (evt.keyCode === 13 && evt.target.name === 'user') {
         notification(newMessageUser);
+        evt.target.value = newMessageUser;
       }
     }
 
